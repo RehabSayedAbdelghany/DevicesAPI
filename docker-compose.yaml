@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # 1. POSTGRES SERVICE (Enhanced)
+  postgres:
+    image: postgres:16-alpine
+    container_name: devices_db
+    # Environment variables moved to secrets or a local .env file (preferred for real secrets)
+    environment:
+      POSTGRES_DB: devices_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password} # Use Docker Compose variable substitution
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Add a custom postgres configuration file for tuning
+      # - ./config/postgresql.conf:/usr/local/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d devices_db"]
+      interval: 5s # Check more frequently
+      timeout: 3s
+      retries: 5
+      start_period: 10s # Wait for 10s before starting checks
+    networks:
+      - devices-network
+    restart: always
+
+  # 2. APPLICATION SERVICE (Enhanced)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devices-api
+    # Spring Boot environment variables (using the host name 'postgres')
+    environment:
+      # Use SPRING_DATASOURCE_URL for clean configuration
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/devices_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
+      SPRING_PROFILES_ACTIVE: dev # Good practice to specify 'dev' locally
+
+      # Optional: Enable Prometheus metrics endpoint
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: 'health,prometheus'
+
+    ports:
+      - "8080:8080"
+
+    # Use shorthand notation for health dependency
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - devices-network
+    restart: unless-stopped
+
+    # Optional: Enable hot-reloading for development (if using volumes)
+    # volumes:
+    #   - ./.m2:/root/.m2  # Cache Maven dependencies
+    #   - ./target/classes:/app/target/classes # Live code reload (needs careful setup)
+
+  # 3. MONITORING SERVICE: Prometheus (Metrics Collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: monitoring_prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml --web.listen-address=:9090
+    volumes:
+      # Map your local prometheus configuration file
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - devices-network
+    restart: unless-stopped
+
+  # 4. MONITORING SERVICE: Grafana (Visualization)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring_grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      # Optional: Custom dashboards/datasources
+      # - ./config/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      # Default user/pass is admin/admin
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+    ports:
+      - "3000:3000"
+    networks:
+      - devices-network
+    restart: unless-stopped
+    depends_on:
+      - prometheus # Ensure Prometheus is up before Grafana tries to connect
+
+volumes:
+  postgres_data:
+    driver: local
+  prometheus_data: # New volume for Prometheus data
+  grafana_data:    # New volume for Grafana data
+
+networks:
+  devices-network:
+    driver: bridge
