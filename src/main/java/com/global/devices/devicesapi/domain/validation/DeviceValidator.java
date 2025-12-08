@@ -10,24 +10,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DeviceValidator {
 
-//    public void validateUpdate(DeviceEntity existingDevice, DeviceUpdateCommand command) {
-//        log.debug("Validating update for device {} with state {}",
-//                existingDevice.getId(), existingDevice.getState());
-//
-//        if (existingDevice.getState() == DeviceState.IN_USE) {
-//            if (command.getName() != null && !command.getName().equals(existingDevice.getName())) {
-//                throw new DeviceInUseException(
-//                        "Cannot update name of a device that is IN_USE"
-//                );
-//            }
-//            if (command.getBrand() != null && !command.getBrand().equals(existingDevice.getBrand())) {
-//                throw new DeviceInUseException(
-//                        "Cannot update brand of a device that is IN_USE"
-//                );
-//            }
-//        }
-//    }
-
     public void validateStatus(Device device) {
         log.debug("Validating delete for device {} with state {}",
                 device.getId(), device.getState());

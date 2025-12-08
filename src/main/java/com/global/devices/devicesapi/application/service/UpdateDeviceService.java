@@ -1,9 +1,9 @@
 package com.global.devices.devicesapi.application.service;
 
-import com.global.devices.devicesapi.application.datasource.PaymentRepositoryWrapper;
+import com.global.devices.devicesapi.application.datasource.DeviceRepositoryWrapper;
 import com.global.devices.devicesapi.application.usecase.UpdateDeviceUseCase;
-import com.global.devices.devicesapi.application.usecase.dto.DeviceRequest;
-import com.global.devices.devicesapi.application.usecase.dto.DeviceResponse;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseRequest;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseResponse;
 import com.global.devices.devicesapi.domain.exception.DeviceNotFoundException;
 import com.global.devices.devicesapi.domain.exception.InvalidOperationException;
 import com.global.devices.devicesapi.domain.model.Device;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,10 +20,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UpdateDeviceService implements UpdateDeviceUseCase {
 
-    private final PaymentRepositoryWrapper repository;
+    private final DeviceRepositoryWrapper repository;
     private  final DeviceValidator deviceValidator;
     @Override
-    public DeviceResponse update(UUID deviceId, DeviceRequest request) {
+    public DeviceUseCaseResponse update(UUID deviceId, DeviceUseCaseRequest request) {
         Device existingDevice = repository.findById(deviceId)
                 .orElseThrow(() -> new DeviceNotFoundException(("Device with id " + deviceId + " not found")));
 
@@ -41,7 +40,7 @@ public class UpdateDeviceService implements UpdateDeviceUseCase {
     }
 
     @Override
-    public DeviceResponse patch(UUID deviceId, Map<String, Object> updatedFields) {
+    public DeviceUseCaseResponse patch(UUID deviceId, Map<String, Object> updatedFields) {
         Device existingDevice = repository.findById(deviceId)
                 .orElseThrow(() -> new DeviceNotFoundException(("Device with id " + deviceId + " not found")));
 

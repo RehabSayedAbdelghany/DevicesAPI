@@ -1,6 +1,6 @@
 package com.global.devices.devicesapi.application.service;
 
-import com.global.devices.devicesapi.application.datasource.PaymentRepositoryWrapper;
+import com.global.devices.devicesapi.application.datasource.DeviceRepositoryWrapper;
 import com.global.devices.devicesapi.application.usecase.DeleteDeviceUseCase;
 import com.global.devices.devicesapi.domain.exception.DeviceNotFoundException;
 import com.global.devices.devicesapi.domain.model.Device;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DeleteDeviceService implements DeleteDeviceUseCase {
 
-    private final PaymentRepositoryWrapper repository;
+    private final DeviceRepositoryWrapper repository;
 
     private  final DeviceValidator deviceValidator;
 

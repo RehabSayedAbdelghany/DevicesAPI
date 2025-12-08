@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter
 @Getter
-public class DeviceResponse {
+public class DeviceUseCaseResponse {
     private UUID id;
     private String name;
     private String brand;

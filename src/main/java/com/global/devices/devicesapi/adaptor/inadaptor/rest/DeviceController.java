@@ -6,6 +6,7 @@ import com.global.devices.devicesapi.application.usecase.CreateDeviceUseCase;
 import com.global.devices.devicesapi.application.usecase.DeleteDeviceUseCase;
 import com.global.devices.devicesapi.application.usecase.GetDeviceUseCase;
 import com.global.devices.devicesapi.application.usecase.UpdateDeviceUseCase;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseResponse;
 import com.global.devices.devicesapi.domain.exception.ErrorResponse;
 import com.global.devices.devicesapi.domain.model.DeviceState;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,7 +86,7 @@ public class DeviceController {
 
         return ResponseEntity.ok(fromList(getDeviceUseCase.getAll()));
     }
-    private  List<DeviceResponse> fromList(List<com.global.devices.devicesapi.application.usecase.dto.DeviceResponse> serviceResponses) {
+    private  List<DeviceResponse> fromList(List<DeviceUseCaseResponse> serviceResponses) {
         if (serviceResponses == null || serviceResponses.isEmpty()) {
             return List.of(); // Return an empty, immutable list
         }

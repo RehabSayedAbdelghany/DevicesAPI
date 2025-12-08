@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-public class DeviceRequest {
+public class DeviceUseCaseRequest {
     private String name;
     private String brand;
     private DeviceState state;

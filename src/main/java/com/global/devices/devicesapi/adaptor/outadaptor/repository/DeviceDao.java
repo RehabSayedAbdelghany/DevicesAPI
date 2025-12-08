@@ -2,7 +2,6 @@ package com.global.devices.devicesapi.adaptor.outadaptor.repository;
 
 import com.global.devices.devicesapi.adaptor.outadaptor.repository.model.DeviceEntity;
 import com.global.devices.devicesapi.application.datasource.DeviceRepositoryPort;
-import com.global.devices.devicesapi.domain.exception.DeviceNotFoundException;
 import com.global.devices.devicesapi.domain.model.Device;
 import com.global.devices.devicesapi.domain.model.DeviceState;
 import lombok.RequiredArgsConstructor;

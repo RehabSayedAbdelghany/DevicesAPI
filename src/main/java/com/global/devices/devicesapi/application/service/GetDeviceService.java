@@ -1,9 +1,8 @@
 package com.global.devices.devicesapi.application.service;
 
-import com.global.devices.devicesapi.application.datasource.PaymentRepositoryWrapper;
+import com.global.devices.devicesapi.application.datasource.DeviceRepositoryWrapper;
 import com.global.devices.devicesapi.application.usecase.GetDeviceUseCase;
-import com.global.devices.devicesapi.application.usecase.dto.DeviceResponse;
-import com.global.devices.devicesapi.application.usecase.dto.GetDeviceResponse;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseResponse;
 import com.global.devices.devicesapi.domain.exception.DeviceNotFoundException;
 import com.global.devices.devicesapi.domain.model.Device;
 import com.global.devices.devicesapi.domain.model.DeviceState;
@@ -19,16 +18,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetDeviceService implements GetDeviceUseCase {
 
-    private final PaymentRepositoryWrapper repository;
+    private final DeviceRepositoryWrapper repository;
 
     @Override
-    public List<DeviceResponse> getAll() {
+    public List<DeviceUseCaseResponse> getAll() {
 
          return toUseCaseResponseList(repository.getAllDevices());
     }
 
     @Override
-    public DeviceResponse findById(UUID id) {
+    public DeviceUseCaseResponse findById(UUID id) {
 
         Optional<Device> device = repository.findById(id);
         if(device.isEmpty()){
@@ -38,18 +37,18 @@ public class GetDeviceService implements GetDeviceUseCase {
     }
 
     @Override
-    public List<DeviceResponse> getByBrand(String brand) {
+    public List<DeviceUseCaseResponse> getByBrand(String brand) {
 
         return toUseCaseResponseList(repository.findByBrand(brand));
     }
 
     @Override
-    public List<DeviceResponse> getByState(DeviceState deviceState) {
+    public List<DeviceUseCaseResponse> getByState(DeviceState deviceState) {
 
         return toUseCaseResponseList(repository.findByState(deviceState));
     }
 
-    public static List<DeviceResponse> toUseCaseResponseList(List<Device> devices) {
+    public static List<DeviceUseCaseResponse> toUseCaseResponseList(List<Device> devices) {
         if (devices == null || devices.isEmpty()) {
             return List.of();
         }

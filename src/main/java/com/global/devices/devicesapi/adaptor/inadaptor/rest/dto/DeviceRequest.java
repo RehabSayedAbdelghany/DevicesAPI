@@ -1,5 +1,6 @@
 package com.global.devices.devicesapi.adaptor.inadaptor.rest.dto;
 
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseRequest;
 import com.global.devices.devicesapi.domain.model.DeviceState;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,8 +28,8 @@ public class DeviceRequest {
     @NotNull(message = "state is required")
     private DeviceState state;
 
-    public com.global.devices.devicesapi.application.usecase.dto.DeviceRequest toUseCaseRequest() {
-        return com.global.devices.devicesapi.application.usecase.dto.DeviceRequest.builder()
+    public DeviceUseCaseRequest toUseCaseRequest() {
+        return DeviceUseCaseRequest.builder()
                 .name(this.name)
                 .brand(this.brand)
                 .state(this.state)

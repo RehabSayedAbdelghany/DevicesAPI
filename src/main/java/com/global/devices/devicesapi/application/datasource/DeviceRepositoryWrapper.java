@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PaymentRepositoryWrapper {
+public class DeviceRepositoryWrapper {
     private final DeviceRepositoryPort deviceRepositoryPort;
 
     public Device saveDevice(Device device){

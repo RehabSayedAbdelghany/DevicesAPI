@@ -1,9 +1,9 @@
 package com.global.devices.devicesapi.application.usecase;
 
 
-import com.global.devices.devicesapi.application.usecase.dto.DeviceRequest;
-import com.global.devices.devicesapi.application.usecase.dto.DeviceResponse;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseRequest;
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseResponse;
 
 public interface CreateDeviceUseCase{
-    DeviceResponse create(DeviceRequest request);
+    DeviceUseCaseResponse create(DeviceUseCaseRequest request);
 }

@@ -1,5 +1,6 @@
 package com.global.devices.devicesapi.adaptor.inadaptor.rest.dto;
 
+import com.global.devices.devicesapi.application.usecase.dto.DeviceUseCaseResponse;
 import com.global.devices.devicesapi.domain.model.DeviceState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class DeviceResponse {
     private DeviceState state;
     private Instant creationTime;
 
-    public static DeviceResponse from(com.global.devices.devicesapi.application.usecase.dto.DeviceResponse device) {
+    public static DeviceResponse from(DeviceUseCaseResponse device) {
         return com.global.devices.devicesapi.adaptor.inadaptor.rest.dto.DeviceResponse.builder()
                 .id(device.getId())
                 .name(device.getName())
