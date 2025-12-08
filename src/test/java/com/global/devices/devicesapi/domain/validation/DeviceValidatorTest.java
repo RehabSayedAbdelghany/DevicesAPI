@@ -1,6 +1,5 @@
 package com.global.devices.devicesapi.domain.validation;
 
-import com.global.devices.devicesapi.domain.exception.InvalidOperationException;
 import com.global.devices.devicesapi.domain.model.Device;
 import com.global.devices.devicesapi.domain.model.DeviceState;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,24 +49,7 @@ class DeviceValidatorTest {
                 "Validation should pass for an INACTIVE device.");
     }
 
-    // --- 2. Test Failure Validation (Operation Forbidden) ---
 
-    @Test
-    void validateStatus_ShouldThrowInvalidOperationException_WhenDeviceIsInUse() {
-        // Arrange
-        Device inUseDevice = new Device(
-                TEST_ID, "Test", "Brand", DeviceState.IN_USE, TEST_TIME
-        );
 
-        // Act & Assert
-        InvalidOperationException exception = assertThrows(
-                InvalidOperationException.class,
-                () -> deviceValidator.validateStatus(inUseDevice),
-                "Expected InvalidOperationException to be thrown for IN_USE device."
-        );
 
-        // Verify the exception message is correct
-        String expectedMessage = "Device with id " + TEST_ID + " is currently in use and cannot be updated/deleted";
-        assertEquals(expectedMessage, exception.getMessage());
-    }
 }

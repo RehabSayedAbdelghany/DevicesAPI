@@ -109,10 +109,10 @@ class DeviceControllerTest {
         List<DeviceUseCaseResponse> list = Collections.singletonList(deviceUseCaseResponse);
         when(getDeviceUseCase.getAll()).thenReturn(list);
 
-        List<DeviceUseCaseResponse> responseList = getDeviceUseCase.getAll();
+        ResponseEntity<List<DeviceResponse>>  responseList = deviceController.getDevices();
 
         assertNotNull(responseList);
-        assertEquals(1, responseList.size());
+        assertEquals(1, responseList.getBody().size());
         verify(getDeviceUseCase).getAll();
         verifyNoInteractions(updateDeviceUseCase);
         verifyNoInteractions(createDeviceUseCase);
@@ -143,10 +143,10 @@ class DeviceControllerTest {
         List<DeviceUseCaseResponse> list = Collections.singletonList(deviceUseCaseResponse);
         when(getDeviceUseCase.getByState( DeviceState.IN_USE)).thenReturn(list);
 
-        List<DeviceUseCaseResponse> responseList = getDeviceUseCase.getByState(DeviceState.IN_USE);
+        ResponseEntity<List<DeviceResponse>> responseList = deviceController.getByState(DeviceState.IN_USE);
 
         assertNotNull(responseList);
-        assertEquals(1, responseList.size());
+        assertEquals(1, responseList.getBody().size());
         verify(getDeviceUseCase).getByState(DeviceState.IN_USE);
         verifyNoInteractions(updateDeviceUseCase);
         verifyNoInteractions(createDeviceUseCase);
@@ -159,10 +159,11 @@ class DeviceControllerTest {
         List<DeviceUseCaseResponse> list = Collections.singletonList(deviceUseCaseResponse);
         when(getDeviceUseCase.getByBrand("brand")).thenReturn(list);
 
-        List<DeviceUseCaseResponse> responseList = getDeviceUseCase.getByBrand("brand");
+        ResponseEntity<List<DeviceResponse>> responseList = deviceController.getByBrand("brand");
+
 
         assertNotNull(responseList);
-        assertEquals(1, responseList.size());
+        assertEquals(1, responseList.getBody().size());
         verify(getDeviceUseCase).getByBrand("brand");
         verifyNoInteractions(updateDeviceUseCase);
         verifyNoInteractions(createDeviceUseCase);

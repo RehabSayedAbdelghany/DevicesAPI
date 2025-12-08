@@ -73,7 +73,6 @@ public class DeviceController {
     })
     public ResponseEntity<DeviceResponse> getDeviceById(
             @Parameter(description = "Device ID") @PathVariable UUID id) {
-         ;
         return ResponseEntity.ok(DeviceResponse.from(getDeviceUseCase.findById(id)));
     }
 
