@@ -203,6 +203,13 @@ The project includes a complete Docker Compose setup with:
     - Port: `8080:8080`
     - Depends on PostgreSQL health check
     - Auto-restart enabled
+3. **Prometheus**
+    - Port: `9090:9090`
+    - Time-series database responsible for collecting metrics (scrapes the Spring Boot Actuator endpoint).
+
+3. **Grafana**
+    - Port: `3000:3000`
+    - TVisualization platform used to display metrics collected by Prometheus, providing dashboards for system health
 
 **Docker Commands:**
 
